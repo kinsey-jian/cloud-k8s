@@ -1,0 +1,30 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: consumer-service
+  cloud:
+    consul:
+      enabled: false
+      discovery:
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        #prefer-ip-address: true
+      retry:
+        initial-interval: 10
+        multiplier: 1
+        max-interval: 30000
+        max-attempts: 15
+
+ribbon:
+  okhttp:
+    enabled: true
+  restclient:
+    enabled: true
+
+backend:
+  ribbon:
+    eureka:
+      enabled: false
+    client:
+      enabled: true
+    ServerListRefreshInterval: 5000

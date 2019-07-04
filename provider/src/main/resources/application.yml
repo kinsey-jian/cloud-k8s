@@ -1,0 +1,28 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: provider-service
+  cloud:
+    consul:
+      enabled: true
+      discovery:
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        #prefer-ip-address: true
+      retry:
+        initial-interval: 10
+        multiplier: 1
+        max-interval: 30000
+        max-attempts: 15
+    kubernetes:
+      discovery:
+        enabled: false
+  autoconfigure:
+    exclude:
+     - org.springframework.cloud.kubernetes.discovery.KubernetesDiscoveryClientAutoConfiguration
+ribbon:
+  okhttp:
+    enabled: true
+  restclient:
+    enabled: true
+
